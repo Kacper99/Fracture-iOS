@@ -28,13 +28,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var destViewController : GameView = segue.destination as! GameView
+        let destViewController = segue.destination as! GameView
         
         var names: [String] = []
         for nameField in nameFields {
             names.append(nameField.text!)
         }
+        
         destViewController.names = names
     }
     

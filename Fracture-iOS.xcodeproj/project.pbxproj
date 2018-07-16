@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		025BEC9420FD60E40020F73F /* challenges.txt in Resources */ = {isa = PBXBuildFile; fileRef = 025BEC9320FD60E40020F73F /* challenges.txt */; };
 		02C934E720FD502B00786958 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C934E620FD502B00786958 /* AppDelegate.swift */; };
 		02C934E920FD502B00786958 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C934E820FD502B00786958 /* ViewController.swift */; };
 		02C934EC20FD502B00786958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C934EA20FD502B00786958 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		025BEC9320FD60E40020F73F /* challenges.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = challenges.txt; sourceTree = "<group>"; };
 		02C934E320FD502B00786958 /* Fracture-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fracture-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02C934E620FD502B00786958 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02C934E820FD502B00786958 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				02C934E820FD502B00786958 /* ViewController.swift */,
 				02C934EA20FD502B00786958 /* Main.storyboard */,
 				02C934F820FD507700786958 /* GameView.swift */,
+				025BEC9320FD60E40020F73F /* challenges.txt */,
 				02C934ED20FD502B00786958 /* Assets.xcassets */,
 				02C934EF20FD502B00786958 /* LaunchScreen.storyboard */,
 				02C934F220FD502B00786958 /* Info.plist */,
@@ -127,6 +130,7 @@
 			files = (
 				02C934F120FD502B00786958 /* LaunchScreen.storyboard in Resources */,
 				02C934EE20FD502B00786958 /* Assets.xcassets in Resources */,
+				025BEC9420FD60E40020F73F /* challenges.txt in Resources */,
 				02C934EC20FD502B00786958 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

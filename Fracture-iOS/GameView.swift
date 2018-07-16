@@ -16,7 +16,11 @@ class GameView: UIViewController {
     
     var names: [String] = []
     
+    var count = 0;
     override func viewDidLoad() {
-        print(names)
+        for element in names {
+            print(count, " ", element)
+            count += 1
+        }
     }
 }
