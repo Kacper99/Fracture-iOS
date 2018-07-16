@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet var nameFields: [UITextField]!
@@ -16,6 +16,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        for textField in nameFields {
+            textField.delegate = self
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,10 +28,19 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var destViewController : GameView = segue.destination as! GameView
         
+        var names: [String] = []
+        for nameField in nameFields {
+            names.append(nameField.text!)
+        }
+        destViewController.names = names
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
 

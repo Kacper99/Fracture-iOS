@@ -14,9 +14,9 @@ class GameView: UIViewController {
     
     @IBOutlet var GameButton: UIButton!
     
-    var labelText = String();
+    var names: [String] = []
     
     override func viewDidLoad() {
-        
+        print(names)
     }
 }
