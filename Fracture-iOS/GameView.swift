@@ -9,18 +9,38 @@
 import Foundation
 import UIKit
 
-class GameView: UIViewController {
+class Challenge {
     
+}
+
+
+class GameView: UIViewController {
     
     @IBOutlet var GameButton: UIButton!
     
     var names: [String] = []
+    var challeges: [Challenge] = []
     
-    var count = 0;
     override func viewDidLoad() {
+        
+        var count = 0;
         for element in names {
             print(count, " ", element)
             count += 1
         }
+        
+        var myStrings:[String] = []
+        
+        //Load all lines from text file
+        if let path = Bundle.main.path(forResource: "challenges", ofType: "txt") {
+            do {
+                let data = try String(contentsOfFile: path, encoding: .utf8)
+                myStrings = data.components(separatedBy: .newlines)
+            } catch {
+                print(error)
+            }
+        }
+        
+        
     }
 }
