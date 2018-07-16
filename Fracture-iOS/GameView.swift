@@ -12,7 +12,11 @@ import UIKit
 class GameView: UIViewController {
     
     
+    @IBOutlet var GameButton: UIButton!
+    
+    var labelText = String();
+    
     override func viewDidLoad() {
-        <#code#>
+        
     }
 }
