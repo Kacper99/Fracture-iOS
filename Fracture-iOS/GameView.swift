@@ -43,21 +43,60 @@ class GameView: UIViewController {
     var activeViruses: [Virus] = []
     
     @IBAction func gameButtonPress(_ sender: Any) {
-        if availableChallenges.count < 1 {
-            gameButton.setTitle("Game finished, tap to restart", for: .normal)
-            availableChallenges = allChallenges
-            activeViruses = []
+        if availableChallenges.isEmpty {
+            if !activeViruses.isEmpty {
+                let v: Virus = activeViruses.removeFirst()
+                gameButton.setTitle(v.endText, for: .normal)
+            } else {
+                gameButton.setTitle("Game finished, tap to restart", for: .normal)
+                availableChallenges = allChallenges
+                activeViruses = []
+            }
+            return
+        }
+        
+        for i in 0..<activeViruses.count {
+            if activeViruses[i].turnsLeft == 0 {
+                gameButton.setTitle(activeViruses[i].endText, for: .normal)
+                activeViruses.remove(at: i)
+                return
+            } else {
+                activeViruses[i].turnsLeft -= 1
+            }
         }
         
         let challengeNum: Int = Int(arc4random_uniform(UInt32(availableChallenges.count)))
-        let randomChallenge = availableChallenges[challengeNum]
+        let randomChallenge = availableChallenges.remove(at: challengeNum)
         
         if let v = randomChallenge as? Virus {
-            gameButton.setTitle(v.challenge, for: .normal)
+            let randomInt = 10 + Int(arc4random_uniform(15))
+            print(randomInt)
+            v.turnsLeft = randomInt
+            activeViruses.append(v)
+            
+            var challengeText: String = v.challenge
+            var availableNames = names
+            
+            while challengeText.contains("!NAME!") {
+                let randomInt = Int(arc4random_uniform(UInt32(availableNames.count)))
+                let randomName = availableNames.remove(at: randomInt)
+                challengeText = challengeText.replaceFirst(of: "!NAME!", with: randomName)
+            }
+            gameButton.setTitle(challengeText, for: .normal)
+            
         } else if let c = randomChallenge as? Challenge {
-            gameButton.setTitle(c.challenge, for: .normal)
+            var challengeText: String = c.challenge
+            
+            var availableNames = names
+
+            while challengeText.contains("!NAME!") {
+                let randomInt = Int(arc4random_uniform(UInt32(availableNames.count)))
+                let randomName = availableNames.remove(at: randomInt)
+                challengeText = challengeText.replaceFirst(of: "!NAME!", with: randomName)
+            }
+            
+            gameButton.setTitle(challengeText, for: .normal)
         }
-        availableChallenges.remove(at: challengeNum)
     }
     
     override func viewDidLoad() {
@@ -118,4 +157,30 @@ class GameView: UIViewController {
     override var prefersStatusBarHidden: Bool { //Hide notification bar
         return true
     }
+}
+
+extension String {
+    
+    public func replaceFirst(of pattern:String, with replacement:String) -> String {
+        if let range = self.range(of: pattern) {
+            return self.replacingCharacters(in: range, with: replacement)
+        } else {
+            return self
+        }
+    }
+    
+    public func replaceAll(of pattern:String,
+                           with replacement:String,
+                           options: NSRegularExpression.Options = []) -> String{
+        do{
+            let regex = try NSRegularExpression(pattern: pattern, options: [])
+            let range = NSRange(0..<self.utf16.count)
+            return regex.stringByReplacingMatches(in: self, options: [],
+                                                  range: range, withTemplate: replacement)
+        }catch{
+            NSLog("replaceAll error: \(error)")
+            return self
+        }
+    }
+    
 }
