@@ -33,7 +33,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         var names: [String] = []
         for nameField in nameFields {
-            names.append(nameField.text!)
+            if nameField.text != "" {
+                names.append(nameField.text!)
+            }
         }
         
         destViewController.names = names
