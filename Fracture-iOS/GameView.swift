@@ -34,15 +34,38 @@ class Virus: Challenge {
 
 class GameView: UIViewController {
     
-    @IBOutlet var GameButton: UIButton!
+
+    @IBOutlet var gameButton: UIButton!
     
     var names: [String] = []
-    var challeges: [AnyObject] = []
+    var allChallenges: [AnyObject] = []
+    var availableChallenges: [AnyObject] = []
+    var activeViruses: [Virus] = []
+    
+    @IBAction func gameButtonPress(_ sender: Any) {
+        if availableChallenges.count < 1 {
+            gameButton.setTitle("Game finished, tap to restart", for: .normal)
+            availableChallenges = allChallenges
+            activeViruses = []
+        }
+        
+        let challengeNum: Int = Int(arc4random_uniform(UInt32(availableChallenges.count)))
+        let randomChallenge = availableChallenges[challengeNum]
+        
+        if let v = randomChallenge as? Virus {
+            gameButton.setTitle(v.challenge, for: .normal)
+        } else if let c = randomChallenge as? Challenge {
+            gameButton.setTitle(c.challenge, for: .normal)
+        }
+        availableChallenges.remove(at: challengeNum)
+    }
     
     override func viewDidLoad() {
         
         var cStrings:[String] = []
         
+        gameButton.titleLabel?.textAlignment = NSTextAlignment.center //Align title to center
+
         //Load all lines from text file
         if let path = Bundle.main.path(forResource: "challenges", ofType: "txt") {
             do {
@@ -59,24 +82,25 @@ class GameView: UIViewController {
             //print(cStrings[i])
             var line: String = cStrings[i]
             
-            if line.range(of: "!VIRUS!") != nil {
+            if line.range(of: "!VIRUS!") != nil { //Add virus type
                 line = line.replacingOccurrences(of: "!VIRUS!", with: "")
                 i += 1
                 let endText = cStrings[i]
                 
-                challeges.append(Virus(challenge: line, endText: endText))
+                allChallenges.append(Virus(challenge: line, endText: endText))
                 
-            } else {
-                challeges.append(Challenge(challenge: line))
+            } else { //Add normal challenge
+                allChallenges.append(Challenge(challenge: line))
                 
             }
 
             i += 1
         }
         
-        print(challeges.count)
+        //Used to check if all elements are in the array
+        print(allChallenges.count)
         var cCount:Int = 0, vCount: Int = 0
-        for element in challeges {
+        for element in allChallenges {
             
             if let v = element as? Virus {
                 print(v.challenge, " ", v.endText)
@@ -87,5 +111,11 @@ class GameView: UIViewController {
             }
         }
         print(cCount, " ", vCount)
+        
+        availableChallenges = allChallenges
+    }
+    
+    override var prefersStatusBarHidden: Bool { //Hide notification bar
+        return true
     }
 }
